@@ -16,6 +16,8 @@ import com.animee.forecast.MainActivity;
 import com.animee.forecast.R;
 import com.animee.forecast.base.BaseActivity;
 import com.animee.forecast.bean.WeatherBean;
+import com.animee.forecast.juhe.JHTempBean;
+import com.animee.forecast.juhe.URLUtils;
 import com.google.gson.Gson;
 
 public class SearchCityActivity extends BaseActivity implements View.OnClickListener{
@@ -25,8 +27,7 @@ public class SearchCityActivity extends BaseActivity implements View.OnClickList
     String[]hotCitys = {"北京","上海","广州","深圳","珠海","佛山","南京","苏州","厦门","长沙","成都","福州",
             "杭州","武汉","青岛","西安","太原","沈阳","重庆","天津","南宁"};
     private ArrayAdapter<String> adapter;
-    String url1 = "http://api.map.baidu.com/telematics/v3/weather?location=";
-    String url2 = "&output=json&ak=FkPhtMBK0HTIQNh7gG4cNUttSTyr0nzo";
+
     String city;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +48,7 @@ public class SearchCityActivity extends BaseActivity implements View.OnClickList
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 city = hotCitys[position];
-                String url = url1+city+url2;
+                String url = URLUtils.getTemp_url(city);
                 loadData(url);
             }
         });
@@ -60,7 +61,7 @@ public class SearchCityActivity extends BaseActivity implements View.OnClickList
                 city = searchEt.getText().toString();
                 if (!TextUtils.isEmpty(city)) {
 //                      判断是否能够找到这个城市
-                        String url = url1+city+url2;
+                        String url = URLUtils.getTemp_url(city);
                         loadData(url);
                 }else {
                     Toast.makeText(this,"输入内容不能为空！",Toast.LENGTH_SHORT).show();
@@ -71,8 +72,8 @@ public class SearchCityActivity extends BaseActivity implements View.OnClickList
 
     @Override
     public void onSuccess(String result) {
-        WeatherBean weatherBean = new Gson().fromJson(result, WeatherBean.class);
-        if (weatherBean.getError()==0) {
+        JHTempBean weatherBean = new Gson().fromJson(result, JHTempBean.class);
+        if (weatherBean.getError_code()==0) {
             Intent intent = new Intent(this, MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.putExtra("city",city);

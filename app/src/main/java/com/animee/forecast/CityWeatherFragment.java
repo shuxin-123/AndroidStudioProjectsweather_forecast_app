@@ -1,9 +1,10 @@
 package com.animee.forecast;
-
-
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -17,25 +18,26 @@ import android.widget.TextView;
 import com.animee.forecast.base.BaseFragment;
 import com.animee.forecast.bean.WeatherBean;
 import com.animee.forecast.db.DBManager;
+import com.animee.forecast.juhe.HttpUtils;
+import com.animee.forecast.juhe.JHIndexBean;
+import com.animee.forecast.juhe.JHTempBean;
+import com.animee.forecast.juhe.URLUtils;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static android.content.Context.MODE_PRIVATE;
-
-
 /**
- * A simple {@link Fragment} subclass.
+ * 主页面当中ViewPager所嵌套的Fragment
  */
 public class CityWeatherFragment extends BaseFragment implements View.OnClickListener{
-    TextView tempTv,cityTv,conditionTv,windTv,tempRangeTv,dateTv,clothIndexTv,carIndexTv,coldIndexTv,sportIndexTv,raysIndexTv;
+    TextView tempTv,cityTv,conditionTv,windTv,tempRangeTv,dateTv,clothIndexTv,carIndexTv,coldIndexTv,sportIndexTv,raysIndexTv,airIndexTv;
     ImageView dayIv;
     LinearLayout futureLayout;
     ScrollView outLayout;
-    String url1 = "http://api.map.baidu.com/telematics/v3/weather?location=";
-    String url2 = "&output=json&ak=FkPhtMBK0HTIQNh7gG4cNUttSTyr0nzo";
-    private List<WeatherBean.ResultsBean.IndexBean> indexList;
+    JHIndexBean.ResultBean.LifeBean lifeBean;    //指数信息
     String city;
     private SharedPreferences pref;
     private int bgNum;
@@ -66,10 +68,26 @@ public class CityWeatherFragment extends BaseFragment implements View.OnClickLis
 //        可以通过activity传值获取到当前fragment加载的是那个地方的天气情况
         Bundle bundle = getArguments();
         city = bundle.getString("city");
-        String url = url1+city+url2;
+        String tempUrl = URLUtils.getTemp_url(city);
 //      调用父类获取数据的方法
-        loadData(url);
+        loadData(tempUrl);
+
+        // 获取指数信息的网址
+        String index_url = URLUtils.getIndex_url(city);
+        loadIndexData(index_url);
         return view;
+    }
+
+     /* 网络获取指数信息*/
+    private void loadIndexData(final String index_url) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String json = HttpUtils.getJsonContent(index_url);
+                JHIndexBean jhIndexBean = new Gson().fromJson(json, JHIndexBean.class);
+                lifeBean = jhIndexBean.getResult().getLife();
+            }
+        }).start();
     }
 
     @Override
@@ -94,26 +112,23 @@ public class CityWeatherFragment extends BaseFragment implements View.OnClickLis
     }
     private void parseShowData(String result) {
 //        使用gson解析数据
-        WeatherBean weatherBean = new Gson().fromJson(result, WeatherBean.class);
-        WeatherBean.ResultsBean resultsBean = weatherBean.getResults().get(0);
-//        获取指数信息集合列表
-        indexList = resultsBean.getIndex();
+        JHTempBean jhTempBean = new Gson().fromJson(result, JHTempBean.class);
+        JHTempBean.ResultBean jhResult = jhTempBean.getResult();
 //        设置TextView
-        dateTv.setText(weatherBean.getDate());
-        cityTv.setText(resultsBean.getCurrentCity());
+        dateTv.setText(jhResult.getFuture().get(0).getDate());
+        cityTv.setText(jhResult.getCity());
 //        获取今日天气情况
-        WeatherBean.ResultsBean.WeatherDataBean todayDataBean = resultsBean.getWeather_data().get(0);
-        windTv.setText(todayDataBean.getWind());
-        tempRangeTv.setText(todayDataBean.getTemperature());
-        conditionTv.setText(todayDataBean.getWeather());
-//     获取实时天气温度情况，需要处理字符串
-        String[] split = todayDataBean.getDate().split("：");
-        String todayTemp = split[1].replace(")", "");
-        tempTv.setText(todayTemp);
-//        设置显示的天气情况图片
-        Picasso.with(getActivity()).load(todayDataBean.getDayPictureUrl()).into(dayIv);
+        JHTempBean.ResultBean.FutureBean jhTodayFuture = jhResult.getFuture().get(0);
+        JHTempBean.ResultBean.RealtimeBean jhRealtime = jhResult.getRealtime();
+
+        windTv.setText(jhRealtime.getDirect()+jhRealtime.getPower());
+        tempRangeTv.setText(jhTodayFuture.getTemperature());
+        conditionTv.setText(jhRealtime.getInfo());
+//     获取实时天气温度情况
+        tempTv.setText(jhRealtime.getTemperature()+"℃");
+
 //        获取未来三天的天气情况，加载到layout当中
-        List<WeatherBean.ResultsBean.WeatherDataBean> futureList = resultsBean.getWeather_data();
+        List<JHTempBean.ResultBean.FutureBean> futureList = jhResult.getFuture();
         futureList.remove(0);
         for (int i = 0; i < futureList.size(); i++) {
             View itemView = LayoutInflater.from(getActivity()).inflate(R.layout.item_main_center, null);
@@ -121,16 +136,19 @@ public class CityWeatherFragment extends BaseFragment implements View.OnClickLis
             futureLayout.addView(itemView);
             TextView idateTv = itemView.findViewById(R.id.item_center_tv_date);
             TextView iconTv = itemView.findViewById(R.id.item_center_tv_con);
+            TextView windTv = itemView.findViewById(R.id.item_center_tv_wind);
             TextView itemprangeTv = itemView.findViewById(R.id.item_center_tv_temp);
             ImageView iIv = itemView.findViewById(R.id.item_center_iv);
 //          获取对应的位置的天气情况
-            WeatherBean.ResultsBean.WeatherDataBean dataBean = futureList.get(i);
+            JHTempBean.ResultBean.FutureBean dataBean = futureList.get(i);
             idateTv.setText(dataBean.getDate());
             iconTv.setText(dataBean.getWeather());
             itemprangeTv.setText(dataBean.getTemperature());
-            Picasso.with(getActivity()).load(dataBean.getDayPictureUrl()).into(iIv);
+            windTv.setText(dataBean.getDirect());
         }
     }
+
+
 
     private void initView(View view) {
 //        用于初始化控件操作
@@ -145,6 +163,7 @@ public class CityWeatherFragment extends BaseFragment implements View.OnClickLis
         coldIndexTv = view.findViewById(R.id.frag_index_tv_cold);
         sportIndexTv = view.findViewById(R.id.frag_index_tv_sport);
         raysIndexTv = view.findViewById(R.id.frag_index_tv_rays);
+        airIndexTv = view.findViewById(R.id.frag_index_tv_air);
         dayIv = view.findViewById(R.id.frag_iv_today);
         futureLayout = view.findViewById(R.id.frag_center_layout);
         outLayout = view.findViewById(R.id.out_layout);
@@ -154,6 +173,7 @@ public class CityWeatherFragment extends BaseFragment implements View.OnClickLis
         coldIndexTv.setOnClickListener(this);
         sportIndexTv.setOnClickListener(this);
         raysIndexTv.setOnClickListener(this);
+        airIndexTv.setOnClickListener(this);
     }
 
     @Override
@@ -162,36 +182,55 @@ public class CityWeatherFragment extends BaseFragment implements View.OnClickLis
         switch (v.getId()) {
             case R.id.frag_index_tv_dress:
                 builder.setTitle("穿衣指数");
-                WeatherBean.ResultsBean.IndexBean indexBean = indexList.get(0);
-                String msg = indexBean.getZs()+"\n"+indexBean.getDes();
+                String msg = "暂无信息";
+                if (lifeBean!=null){
+                    msg = lifeBean.getChuanyi().getV()+"\n"+lifeBean.getChuanyi().getDes();
+                }
                 builder.setMessage(msg);
                 builder.setPositiveButton("确定",null);
                 break;
             case R.id.frag_index_tv_washcar:
                 builder.setTitle("洗车指数");
-                indexBean = indexList.get(1);
-                msg = indexBean.getZs()+"\n"+indexBean.getDes();
+                msg = "暂无信息";
+                if (lifeBean!=null){
+                    msg = lifeBean.getXiche().getV()+"\n"+lifeBean.getXiche().getDes();
+                }
                 builder.setMessage(msg);
                 builder.setPositiveButton("确定",null);
                 break;
             case R.id.frag_index_tv_cold:
                 builder.setTitle("感冒指数");
-                indexBean = indexList.get(2);
-                msg = indexBean.getZs()+"\n"+indexBean.getDes();
+                msg = "暂无信息";
+                if (lifeBean!=null){
+                    msg = lifeBean.getGanmao().getV()+"\n"+lifeBean.getGanmao().getDes();
+                }
                 builder.setMessage(msg);
                 builder.setPositiveButton("确定",null);
                 break;
             case R.id.frag_index_tv_sport:
                 builder.setTitle("运动指数");
-                indexBean = indexList.get(3);
-                msg = indexBean.getZs()+"\n"+indexBean.getDes();
+                msg = "暂无信息";
+                if (lifeBean!=null){
+                    msg = lifeBean.getYundong().getV()+"\n"+lifeBean.getYundong().getDes();
+                }
                 builder.setMessage(msg);
                 builder.setPositiveButton("确定",null);
                 break;
             case R.id.frag_index_tv_rays:
                 builder.setTitle("紫外线指数");
-                indexBean = indexList.get(4);
-                msg = indexBean.getZs()+"\n"+indexBean.getDes();
+                msg = "暂无信息";
+                if (lifeBean!=null){
+                    msg = lifeBean.getZiwaixian().getV()+"\n"+lifeBean.getZiwaixian().getDes();
+                }
+                builder.setMessage(msg);
+                builder.setPositiveButton("确定",null);
+                break;
+            case R.id.frag_index_tv_air:
+                builder.setTitle("空调指数");
+                msg = "暂无信息";
+                if (lifeBean!=null){
+                    msg = lifeBean.getKongtiao().getV()+"\n"+lifeBean.getKongtiao().getDes();
+                }
                 builder.setMessage(msg);
                 builder.setPositiveButton("确定",null);
                 break;

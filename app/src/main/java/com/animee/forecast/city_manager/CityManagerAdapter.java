@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.animee.forecast.R;
 import com.animee.forecast.bean.WeatherBean;
 import com.animee.forecast.db.DatabaseBean;
+import com.animee.forecast.juhe.JHTempBean;
 import com.google.gson.Gson;
 
 import java.util.List;
@@ -50,15 +51,17 @@ public class CityManagerAdapter extends BaseAdapter{
         }
         DatabaseBean bean = mDatas.get(position);
         holder.cityTv.setText(bean.getCity());
-        WeatherBean weatherBean = new Gson().fromJson(bean.getContent(), WeatherBean.class);
+
+        JHTempBean jhTempBean = new Gson().fromJson(bean.getContent(), JHTempBean.class);
+        JHTempBean.ResultBean jhResult = jhTempBean.getResult();
+        JHTempBean.ResultBean.RealtimeBean jhRealtime = jhResult.getRealtime();
+        JHTempBean.ResultBean.FutureBean jhTodayBean = jhResult.getFuture().get(0);
 //        获取今日天气情况
-        WeatherBean.ResultsBean.WeatherDataBean dataBean = weatherBean.getResults().get(0).getWeather_data().get(0);
-        holder.conTv.setText("天气:"+dataBean.getWeather());
-        String[] split = dataBean.getDate().split("：");
-        String todayTemp = split[1].replace(")", "");
-        holder.currentTempTv.setText(todayTemp);
-        holder.windTv.setText(dataBean.getWind());
-        holder.tempRangeTv.setText(dataBean.getTemperature());
+        holder.conTv.setText("天气:"+jhRealtime.getInfo());
+
+        holder.currentTempTv.setText(jhRealtime.getTemperature()+"℃");
+        holder.windTv.setText(jhRealtime.getDirect()+jhRealtime.getPower());
+        holder.tempRangeTv.setText(jhTodayBean.getTemperature());
         return convertView;
     }
 

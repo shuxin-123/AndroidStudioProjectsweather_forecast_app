@@ -63,8 +63,7 @@
                 android:layout_height="120dp"
                 android:id="@+id/frag_iv_today"
                 android:scaleType="centerCrop"
-                android:layout_alignParentRight="true"
-                android:src="@mipmap/icon"/>
+                android:layout_alignParentRight="true"/>
         </RelativeLayout>
         <!-- 用于显示未来三天的天气情况-->
         <LinearLayout
@@ -140,7 +139,11 @@
                     android:layout_height="match_parent"
                     android:background="#2E8B57"/>
                 <TextView
-                    style="@style/indextext"/>
+                    android:id="@+id/frag_index_tv_air"
+                    style="@style/indextext"
+                    android:text="空调指数"
+                    android:drawablePadding="10dp"
+                    android:drawableBottom="@mipmap/icon_air"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
