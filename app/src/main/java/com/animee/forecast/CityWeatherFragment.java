@@ -85,7 +85,9 @@ public class CityWeatherFragment extends BaseFragment implements View.OnClickLis
             public void run() {
                 String json = HttpUtils.getJsonContent(index_url);
                 JHIndexBean jhIndexBean = new Gson().fromJson(json, JHIndexBean.class);
-                lifeBean = jhIndexBean.getResult().getLife();
+                if (jhIndexBean.getResult()!=null) {
+                    lifeBean = jhIndexBean.getResult().getLife();
+                }
             }
         }).start();
     }
