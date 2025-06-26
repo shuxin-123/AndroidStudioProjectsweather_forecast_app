@@ -40,28 +40,23 @@ public class DeleteCityActivity extends AppCompatActivity implements View.OnClic
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.delete_iv_error:
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle("提示信息").setMessage("您确定要舍弃更改么？")
-                        .setPositiveButton("舍弃更改", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                    finish();   //关闭当前的activity
-                            }
-                        });
-                builder.setNegativeButton("取消",null);
-                builder.create().show();
-                break;
-            case R.id.delete_iv_right:
-                for (int i = 0; i < deleteCitys.size(); i++) {
-                    String city = deleteCitys.get(i);
-//                    调用删除城市的函数
-                    int i1 = DBManager.deleteInfoByCity(city);
-                }
-//                删除成功返回上一级页面
-                finish();
-                break;
+        int clickedId = v.getId();
+
+        if (clickedId == R.id.delete_iv_error) {
+            // 取消操作，显示确认对话框
+            new AlertDialog.Builder(this)
+                    .setTitle("提示信息")
+                    .setMessage("您确定要舍弃更改么？")
+                    .setPositiveButton("舍弃更改", (dialog, which) -> finish())
+                    .setNegativeButton("取消", null)
+                    .create()
+                    .show();
+        } else if (clickedId == R.id.delete_iv_right) {
+            // 确认删除操作
+            for (String city : deleteCitys) {
+                DBManager.deleteInfoByCity(city);
+            }
+            finish(); // 删除成功后返回
         }
     }
 }

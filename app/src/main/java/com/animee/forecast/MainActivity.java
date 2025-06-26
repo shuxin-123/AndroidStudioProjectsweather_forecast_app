@@ -84,13 +84,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         bgNum = pref.getInt("bg", 2);
         switch (bgNum) {
             case 0:
-                outLayout.setBackgroundResource(R.mipmap.bg);
+                outLayout.setBackgroundResource(R.mipmap.bg6);
                 break;
             case 1:
-                outLayout.setBackgroundResource(R.mipmap.bg2);
+                outLayout.setBackgroundResource(R.mipmap.bg7);
                 break;
             case 2:
-                outLayout.setBackgroundResource(R.mipmap.bg3);
+                outLayout.setBackgroundResource(R.mipmap.bg8);
                 break;
         }
 
@@ -144,13 +144,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         Intent intent = new Intent();
-        switch (v.getId()) {
-            case R.id.main_iv_add:
-                intent.setClass(this,CityManagerActivity.class);
-                break;
-            case R.id.main_iv_more:
-                intent.setClass(this,MoreActivity.class);
-                break;
+        int clickedId = v.getId();
+
+        if (clickedId == R.id.main_iv_add) {
+            // 跳转到城市管理页面
+            intent.setClass(this, CityManagerActivity.class);
+            startActivity(intent);
+        } else if (clickedId == R.id.main_iv_more) {
+            // 跳转到更多设置页面
+            intent.setClass(this, MoreActivity.class);
+            startActivity(intent);
         }
         startActivity(intent);
     }

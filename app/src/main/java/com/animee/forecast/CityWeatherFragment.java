@@ -32,8 +32,8 @@ import static android.content.Context.MODE_PRIVATE;
 /**
  * 主页面当中ViewPager所嵌套的Fragment
  */
-public class CityWeatherFragment extends BaseFragment implements View.OnClickListener{
-    TextView tempTv,cityTv,conditionTv,windTv,tempRangeTv,dateTv,clothIndexTv,carIndexTv,coldIndexTv,sportIndexTv,raysIndexTv,airIndexTv;
+public class CityWeatherFragment extends BaseFragment implements View.OnClickListener {
+    TextView tempTv, cityTv, conditionTv, windTv, tempRangeTv, dateTv, clothIndexTv, carIndexTv, coldIndexTv, sportIndexTv, raysIndexTv, airIndexTv;
     ImageView dayIv;
     LinearLayout futureLayout;
     ScrollView outLayout;
@@ -43,22 +43,23 @@ public class CityWeatherFragment extends BaseFragment implements View.OnClickLis
     private int bgNum;
 
     //        换壁纸的函数
-    public void exchangeBg(){
+    public void exchangeBg() {
         pref = getActivity().getSharedPreferences("bg_pref", MODE_PRIVATE);
         bgNum = pref.getInt("bg", 2);
         switch (bgNum) {
             case 0:
-                outLayout.setBackgroundResource(R.mipmap.bg);
+                outLayout.setBackgroundResource(R.mipmap.bg6);
                 break;
             case 1:
-                outLayout.setBackgroundResource(R.mipmap.bg2);
+                outLayout.setBackgroundResource(R.mipmap.bg7);
                 break;
             case 2:
-                outLayout.setBackgroundResource(R.mipmap.bg3);
+                outLayout.setBackgroundResource(R.mipmap.bg8);
                 break;
         }
 
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -78,14 +79,14 @@ public class CityWeatherFragment extends BaseFragment implements View.OnClickLis
         return view;
     }
 
-     /* 网络获取指数信息*/
+    /* 网络获取指数信息*/
     private void loadIndexData(final String index_url) {
         new Thread(new Runnable() {
             @Override
             public void run() {
                 String json = HttpUtils.getJsonContent(index_url);
                 JHIndexBean jhIndexBean = new Gson().fromJson(json, JHIndexBean.class);
-                if (jhIndexBean.getResult()!=null) {
+                if (jhIndexBean.getResult() != null) {
                     lifeBean = jhIndexBean.getResult().getLife();
                 }
             }
@@ -95,14 +96,15 @@ public class CityWeatherFragment extends BaseFragment implements View.OnClickLis
     @Override
     public void onSuccess(String result) {
 //        解析并展示数据
-         parseShowData(result);
+        parseShowData(result);
 //         更新数据
         int i = DBManager.updateInfoByCity(city, result);
-        if (i<=0) {
+        if (i <= 0) {
 //            更新数据库失败，说明没有这条城市信息，增加这个城市记录
-            DBManager.addCityInfo(city,result);
+            DBManager.addCityInfo(city, result);
         }
     }
+
     @Override
     public void onError(Throwable ex, boolean isOnCallback) {
 //        数据库当中查找上一次信息显示在Fragment当中
@@ -112,6 +114,7 @@ public class CityWeatherFragment extends BaseFragment implements View.OnClickLis
         }
 
     }
+
     private void parseShowData(String result) {
 //        使用gson解析数据
         JHTempBean jhTempBean = new Gson().fromJson(result, JHTempBean.class);
@@ -123,11 +126,11 @@ public class CityWeatherFragment extends BaseFragment implements View.OnClickLis
         JHTempBean.ResultBean.FutureBean jhTodayFuture = jhResult.getFuture().get(0);
         JHTempBean.ResultBean.RealtimeBean jhRealtime = jhResult.getRealtime();
 
-        windTv.setText(jhRealtime.getDirect()+jhRealtime.getPower());
+        windTv.setText(jhRealtime.getDirect() + jhRealtime.getPower());
         tempRangeTv.setText(jhTodayFuture.getTemperature());
         conditionTv.setText(jhRealtime.getInfo());
 //     获取实时天气温度情况
-        tempTv.setText(jhRealtime.getTemperature()+"℃");
+        tempTv.setText(jhRealtime.getTemperature() + "℃");
 
 //        获取未来三天的天气情况，加载到layout当中
         List<JHTempBean.ResultBean.FutureBean> futureList = jhResult.getFuture();
@@ -149,7 +152,6 @@ public class CityWeatherFragment extends BaseFragment implements View.OnClickLis
             windTv.setText(dataBean.getDirect());
         }
     }
-
 
 
     private void initView(View view) {
@@ -181,62 +183,37 @@ public class CityWeatherFragment extends BaseFragment implements View.OnClickLis
     @Override
     public void onClick(View v) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        switch (v.getId()) {
-            case R.id.frag_index_tv_dress:
-                builder.setTitle("穿衣指数");
-                String msg = "暂无信息";
-                if (lifeBean!=null){
-                    msg = lifeBean.getChuanyi().getV()+"\n"+lifeBean.getChuanyi().getDes();
-                }
-                builder.setMessage(msg);
-                builder.setPositiveButton("确定",null);
-                break;
-            case R.id.frag_index_tv_washcar:
-                builder.setTitle("洗车指数");
-                msg = "暂无信息";
-                if (lifeBean!=null){
-                    msg = lifeBean.getXiche().getV()+"\n"+lifeBean.getXiche().getDes();
-                }
-                builder.setMessage(msg);
-                builder.setPositiveButton("确定",null);
-                break;
-            case R.id.frag_index_tv_cold:
-                builder.setTitle("感冒指数");
-                msg = "暂无信息";
-                if (lifeBean!=null){
-                    msg = lifeBean.getGanmao().getV()+"\n"+lifeBean.getGanmao().getDes();
-                }
-                builder.setMessage(msg);
-                builder.setPositiveButton("确定",null);
-                break;
-            case R.id.frag_index_tv_sport:
-                builder.setTitle("运动指数");
-                msg = "暂无信息";
-                if (lifeBean!=null){
-                    msg = lifeBean.getYundong().getV()+"\n"+lifeBean.getYundong().getDes();
-                }
-                builder.setMessage(msg);
-                builder.setPositiveButton("确定",null);
-                break;
-            case R.id.frag_index_tv_rays:
-                builder.setTitle("紫外线指数");
-                msg = "暂无信息";
-                if (lifeBean!=null){
-                    msg = lifeBean.getZiwaixian().getV()+"\n"+lifeBean.getZiwaixian().getDes();
-                }
-                builder.setMessage(msg);
-                builder.setPositiveButton("确定",null);
-                break;
-            case R.id.frag_index_tv_air:
-                builder.setTitle("空调指数");
-                msg = "暂无信息";
-                if (lifeBean!=null){
-                    msg = lifeBean.getKongtiao().getV()+"\n"+lifeBean.getKongtiao().getDes();
-                }
-                builder.setMessage(msg);
-                builder.setPositiveButton("确定",null);
-                break;
+        int clickedId = v.getId();
+        String title = "";
+        String msg = "暂无信息";
+
+        if (lifeBean != null) {
+            if (clickedId == R.id.frag_index_tv_dress) {
+                title = "穿衣指数";
+                msg = lifeBean.getChuanyi().getV() + "\n" + lifeBean.getChuanyi().getDes();
+            } else if (clickedId == R.id.frag_index_tv_washcar) {
+                title = "洗车指数";
+                msg = lifeBean.getXiche().getV() + "\n" + lifeBean.getXiche().getDes();
+            } else if (clickedId == R.id.frag_index_tv_cold) {
+                title = "感冒指数";
+                msg = lifeBean.getGanmao().getV() + "\n" + lifeBean.getGanmao().getDes();
+            } else if (clickedId == R.id.frag_index_tv_sport) {
+                title = "运动指数";
+                msg = lifeBean.getYundong().getV() + "\n" + lifeBean.getYundong().getDes();
+            } else if (clickedId == R.id.frag_index_tv_rays) {
+                title = "紫外线指数";
+                msg = lifeBean.getZiwaixian().getV() + "\n" + lifeBean.getZiwaixian().getDes();
+            } else if (clickedId == R.id.frag_index_tv_air) {
+                title = "空调指数";
+                msg = lifeBean.getKongtiao().getV() + "\n" + lifeBean.getKongtiao().getDes();
+            }
         }
-        builder.create().show();
+
+// 统一设置对话框
+        builder.setTitle(title)
+                .setMessage(msg)
+                .setPositiveButton("确定", null)
+                .create()
+                .show();
     }
 }

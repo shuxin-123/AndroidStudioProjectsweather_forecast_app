@@ -56,17 +56,19 @@ public class SearchCityActivity extends BaseActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.search_iv_submit:
-                city = searchEt.getText().toString();
-                if (!TextUtils.isEmpty(city)) {
-//                      判断是否能够找到这个城市
-                        String url = URLUtils.getTemp_url(city);
-                        loadData(url);
-                }else {
-                    Toast.makeText(this,"输入内容不能为空！",Toast.LENGTH_SHORT).show();
-                }
-                break;
+        int clickedId = v.getId();
+
+        if (clickedId == R.id.search_iv_submit) {
+            city = searchEt.getText().toString().trim();  // Added trim() to remove whitespace
+
+            if (TextUtils.isEmpty(city)) {
+                Toast.makeText(this, "输入内容不能为空！", Toast.LENGTH_SHORT).show();
+                return;  // Early return for better flow
+            }
+
+            // Proceed with search
+            String url = URLUtils.getTemp_url(city);
+            loadData(url);
         }
     }
 

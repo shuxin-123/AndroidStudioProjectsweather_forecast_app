@@ -1,5 +1,6 @@
 package com.animee.forecast;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -53,31 +54,27 @@ public class MoreActivity extends AppCompatActivity implements View.OnClickListe
                 SharedPreferences.Editor editor = pref.edit();
                 Intent intent = new Intent(MoreActivity.this,MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-                switch (checkedId) {
-                    case R.id.more_rb_green:
-                        if (bg==0) {
-                            Toast.makeText(MoreActivity.this,"您选择的为当前背景，无需改变！",Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                        editor.putInt("bg",0);
-                        editor.commit();
-                        break;
-                    case R.id.more_rb_pink:
-                        if (bg==1) {
-                            Toast.makeText(MoreActivity.this,"您选择的为当前背景，无需改变！",Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                        editor.putInt("bg",1);
-                        editor.commit();
-                        break;
-                    case R.id.more_rb_blue:
-                        if (bg==2) {
-                            Toast.makeText(MoreActivity.this,"您选择的为当前背景，无需改变！",Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                        editor.putInt("bg",2);
-                        editor.commit();
-                        break;
+                if (checkedId == R.id.more_rb_green) {
+                    if (bg == 0) {
+                        Toast.makeText(MoreActivity.this, "您选择的为当前背景，无需改变！", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    editor.putInt("bg", 0);
+                    editor.commit();
+                } else if (checkedId == R.id.more_rb_pink) {
+                    if (bg == 1) {
+                        Toast.makeText(MoreActivity.this, "您选择的为当前背景，无需改变！", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    editor.putInt("bg", 1);
+                    editor.commit();
+                } else if (checkedId == R.id.more_rb_blue) {
+                    if (bg == 2) {
+                        Toast.makeText(MoreActivity.this, "您选择的为当前背景，无需改变！", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    editor.putInt("bg", 2);
+                    editor.commit();
                 }
                 startActivity(intent);
             }
@@ -87,23 +84,20 @@ public class MoreActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.more_iv_back:
-                finish();
-                break;
-            case R.id.more_tv_cache:
-                clearCache();
-                break;
-            case R.id.more_tv_share:
-                shareSoftwareMsg("说天气app是一款超萌超可爱的天气预报软件，画面简约，播报天气情况非常精准，快来下载吧！");
-                break;
-            case R.id.more_tv_exchangebg:
-                if (exbgRg.getVisibility() == View.VISIBLE) {
-                    exbgRg.setVisibility(View.GONE);
-                }else{
-                    exbgRg.setVisibility(View.VISIBLE);
-                }
-                break;
+        int id = v.getId();
+
+        if (id == R.id.more_iv_back) {
+            finish();
+        } else if (id == R.id.more_tv_cache) {
+            clearCache();
+        } else if (id == R.id.more_tv_share) {
+            shareSoftwareMsg("mini天气系统app是一款超萌超可爱的天气预报软件，画面简约，播报天气情况非常精准，快来下载吧！");
+        } else if (id == R.id.more_tv_exchangebg) {
+            if (exbgRg.getVisibility() == View.VISIBLE) {
+                exbgRg.setVisibility(View.GONE);
+            } else {
+                exbgRg.setVisibility(View.VISIBLE);
+            }
         }
     }
 
