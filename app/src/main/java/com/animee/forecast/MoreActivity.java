@@ -1,8 +1,7 @@
 package com.animee.forecast;
 
-import android.Manifest;
+
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
@@ -46,38 +45,24 @@ public class MoreActivity extends AppCompatActivity implements View.OnClickListe
 
     private void setRGListener() {
         /* 设置改变背景图片的单选按钮的监听*/
-        exbgRg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
+        exbgRg.setOnCheckedChangeListener((group, checkedId) -> {
 //                获取目前的默认壁纸
-                int bg = pref.getInt("bg", 0);
-                SharedPreferences.Editor editor = pref.edit();
-                Intent intent = new Intent(MoreActivity.this,MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-                if (checkedId == R.id.more_rb_green) {
-                    if (bg == 0) {
-                        Toast.makeText(MoreActivity.this, "您选择的为当前背景，无需改变！", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    editor.putInt("bg", 0);
-                    editor.commit();
-                } else if (checkedId == R.id.more_rb_pink) {
-                    if (bg == 1) {
-                        Toast.makeText(MoreActivity.this, "您选择的为当前背景，无需改变！", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    editor.putInt("bg", 1);
-                    editor.commit();
-                } else if (checkedId == R.id.more_rb_blue) {
-                    if (bg == 2) {
-                        Toast.makeText(MoreActivity.this, "您选择的为当前背景，无需改变！", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    editor.putInt("bg", 2);
-                    editor.commit();
-                }
-                startActivity(intent);
+            int bg = pref.getInt("bg", 0);
+            SharedPreferences.Editor editor = pref.edit();
+            Intent intent = new Intent(MoreActivity.this,MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+            if (checkedId == R.id.more_rb_green && bg != 0) {
+                editor.putInt("bg", 0);
+            } else if (checkedId == R.id.more_rb_pink && bg != 1) {
+                editor.putInt("bg", 1);
+            } else if (checkedId == R.id.more_rb_blue && bg != 2) {
+                editor.putInt("bg", 2);
+            } else {
+                Toast.makeText(getApplicationContext(), "您选择的为当前背景，无需改变！", Toast.LENGTH_SHORT).show();
+                return;
             }
+            editor.apply();
+            startActivity(intent);
         });
 
     }
@@ -113,15 +98,12 @@ public class MoreActivity extends AppCompatActivity implements View.OnClickListe
         /* 清除缓存的函数*/
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("提示信息").setMessage("确定要删除所有缓存么？");
-        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                DBManager.deleteAllInfo();
-                Toast.makeText(MoreActivity.this,"已清除全部缓存！",Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(MoreActivity.this, MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-            }
+        builder.setPositiveButton("确定", (dialog, which) -> {
+            DBManager.deleteAllInfo();
+            Toast.makeText(MoreActivity.this,"已清除全部缓存！",Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(MoreActivity.this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
         }).setNegativeButton("取消",null);
         builder.create().show();
     }
