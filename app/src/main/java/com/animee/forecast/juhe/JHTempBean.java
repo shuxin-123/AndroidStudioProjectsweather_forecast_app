@@ -7,7 +7,7 @@ import java.util.List;
 public class JHTempBean {
     /**
      * reason : 查询成功!
-     * result : {"city":"沈阳","realtime":{"temperature":"-3","humidity":"24","info":"晴","wid":"00","direct":"西南风","power":"2级","aqi":"34"},"future":[{"date":"2020-12-25","temperature":"-15/-3℃","weather":"晴","wid":{"day":"00","night":"00"},"direct":"西南风转东北风"},{"date":"2020-12-26","temperature":"-10/2℃","weather":"多云","wid":{"day":"01","night":"01"},"direct":"东南风"},{"date":"2020-12-27","temperature":"-15/-2℃","weather":"多云转晴","wid":{"day":"01","night":"00"},"direct":"北风"},{"date":"2020-12-28","temperature":"-18/-7℃","weather":"晴转多云","wid":{"day":"00","night":"01"},"direct":"北风"},{"date":"2020-12-29","temperature":"-22/-12℃","weather":"多云转晴","wid":{"day":"01","night":"00"},"direct":"西北风"}]}
+     * result : {"city":"绵阳","realtime":{"temperature":"26","humidity":"84","info":"阴","wid":"02","direct":"北风","power":"2级","aqi":"29"},"future":[{"date":"2025-07-02","temperature":"23/28℃","weather":"阵雨转暴雨","wid":{"day":"03","night":"10"},"direct":"持续无风向"},{"date":"2025-07-03","temperature":"24/28℃","weather":"阵雨","wid":{"day":"03","night":"03"},"direct":"持续无风向"},{"date":"2025-07-04","temperature":"24/29℃","weather":"阵雨","wid":{"day":"03","night":"03"},"direct":"持续无风向"},{"date":"2025-07-05","temperature":"22/28℃","weather":"小雨","wid":{"day":"07","night":"07"},"direct":"持续无风向"},{"date":"2025-07-06","temperature":"22/28℃","weather":"小雨","wid":{"day":"07","night":"07"},"direct":"持续无风向"}]}
      * error_code : 0
      */
 
@@ -41,9 +41,9 @@ public class JHTempBean {
 
     public static class ResultBean {
         /**
-         * city : 沈阳
-         * realtime : {"temperature":"-3","humidity":"24","info":"晴","wid":"00","direct":"西南风","power":"2级","aqi":"34"}
-         * future : [{"date":"2020-12-25","temperature":"-15/-3℃","weather":"晴","wid":{"day":"00","night":"00"},"direct":"西南风转东北风"},{"date":"2020-12-26","temperature":"-10/2℃","weather":"多云","wid":{"day":"01","night":"01"},"direct":"东南风"},{"date":"2020-12-27","temperature":"-15/-2℃","weather":"多云转晴","wid":{"day":"01","night":"00"},"direct":"北风"},{"date":"2020-12-28","temperature":"-18/-7℃","weather":"晴转多云","wid":{"day":"00","night":"01"},"direct":"北风"},{"date":"2020-12-29","temperature":"-22/-12℃","weather":"多云转晴","wid":{"day":"01","night":"00"},"direct":"西北风"}]
+         * city : 绵阳
+         * realtime : {"temperature":"26","humidity":"84","info":"阴","wid":"02","direct":"北风","power":"2级","aqi":"29"}
+         * future : [{"date":"2025-07-02","temperature":"23/28℃","weather":"阵雨转暴雨","wid":{"day":"03","night":"10"},"direct":"持续无风向"},{"date":"2025-07-03","temperature":"24/28℃","weather":"阵雨","wid":{"day":"03","night":"03"},"direct":"持续无风向"},{"date":"2025-07-04","temperature":"24/29℃","weather":"阵雨","wid":{"day":"03","night":"03"},"direct":"持续无风向"},{"date":"2025-07-05","temperature":"22/28℃","weather":"小雨","wid":{"day":"07","night":"07"},"direct":"持续无风向"},{"date":"2025-07-06","temperature":"22/28℃","weather":"小雨","wid":{"day":"07","night":"07"},"direct":"持续无风向"}]
          */
 
         private String city;
@@ -76,13 +76,13 @@ public class JHTempBean {
 
         public static class RealtimeBean {
             /**
-             * temperature : -3
-             * humidity : 24
-             * info : 晴
-             * wid : 00
-             * direct : 西南风
+             * temperature : 26
+             * humidity : 84
+             * info : 阴
+             * wid : 02
+             * direct : 北风
              * power : 2级
-             * aqi : 34
+             * aqi : 29
              */
 
             private String temperature;
@@ -152,11 +152,11 @@ public class JHTempBean {
 
         public static class FutureBean {
             /**
-             * date : 2020-12-25
-             * temperature : -15/-3℃
-             * weather : 晴
-             * wid : {"day":"00","night":"00"}
-             * direct : 西南风转东北风
+             * date : 2025-07-02
+             * temperature : 23/28℃
+             * weather : 阵雨转暴雨
+             * wid : {"day":"03","night":"10"}
+             * direct : 持续无风向
              */
 
             private String date;
@@ -207,8 +207,8 @@ public class JHTempBean {
 
             public static class WidBean {
                 /**
-                 * day : 00
-                 * night : 00
+                 * day : 03
+                 * night : 10
                  */
 
                 private String day;
