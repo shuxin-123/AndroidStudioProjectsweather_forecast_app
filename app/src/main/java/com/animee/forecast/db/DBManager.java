@@ -1,5 +1,6 @@
 package com.animee.forecast.db;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -20,7 +21,7 @@ public class DBManager {
         Cursor cursor = database.query("info", null, null, null, null, null,null);
         List<String>cityList = new ArrayList<>();
         while (cursor.moveToNext()) {
-            String city = cursor.getString(cursor.getColumnIndex("city"));
+            @SuppressLint("Range") String city = cursor.getString(cursor.getColumnIndex("city"));
             cityList.add(city);
         }
         return cityList;
@@ -43,7 +44,7 @@ public class DBManager {
         Cursor cursor = database.query("info", null, "city=?", new String[]{city}, null, null, null);
         if (cursor.getCount()>0) {
             cursor.moveToFirst();
-            String content = cursor.getString(cursor.getColumnIndex("content"));
+            @SuppressLint("Range") String content = cursor.getString(cursor.getColumnIndex("content"));
             return content;
         }
         return null;
@@ -61,9 +62,9 @@ public class DBManager {
         Cursor cursor = database.query("info", null, null, null, null, null, null);
         List<DatabaseBean>list = new ArrayList<>();
         while (cursor.moveToNext()) {
-            int id = cursor.getInt(cursor.getColumnIndex("_id"));
-            String city = cursor.getString(cursor.getColumnIndex("city"));
-            String content = cursor.getString(cursor.getColumnIndex("content"));
+            @SuppressLint("Range") int id = cursor.getInt(cursor.getColumnIndex("_id"));
+            @SuppressLint("Range") String city = cursor.getString(cursor.getColumnIndex("city"));
+            @SuppressLint("Range") String content = cursor.getString(cursor.getColumnIndex("content"));
             DatabaseBean bean = new DatabaseBean(id, city, content);
             list.add(bean);
         }
