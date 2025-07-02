@@ -1,7 +1,6 @@
 package com.animee.forecast.city_manager;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -15,7 +14,6 @@ import android.widget.Toast;
 import com.animee.forecast.MainActivity;
 import com.animee.forecast.R;
 import com.animee.forecast.base.BaseActivity;
-import com.animee.forecast.bean.WeatherBean;
 import com.animee.forecast.juhe.JHTempBean;
 import com.animee.forecast.juhe.URLUtils;
 import com.google.gson.Gson;

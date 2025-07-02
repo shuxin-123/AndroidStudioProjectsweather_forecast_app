@@ -1,11 +1,7 @@
 package com.animee.forecast;
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,16 +12,13 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.animee.forecast.base.BaseFragment;
-import com.animee.forecast.bean.WeatherBean;
 import com.animee.forecast.db.DBManager;
 import com.animee.forecast.juhe.HttpUtils;
 import com.animee.forecast.juhe.JHIndexBean;
 import com.animee.forecast.juhe.JHTempBean;
 import com.animee.forecast.juhe.URLUtils;
 import com.google.gson.Gson;
-import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static android.content.Context.MODE_PRIVATE;

@@ -8,7 +8,6 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.animee.forecast.R;
-import com.animee.forecast.bean.WeatherBean;
 import com.animee.forecast.db.DatabaseBean;
 import com.animee.forecast.juhe.JHTempBean;
 import com.google.gson.Gson;
