@@ -27,7 +27,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:src="@drawable/ic_baseline_arrow_back_24"
+                android:src="@drawable/bus_active"
                 android:tint="@android:color/white"
                 tools:ignore="UseAppTint" />
 
