@@ -8,11 +8,11 @@
     <TextView
         android:id="@+id/item_center_tv_date"
         android:layout_width="60dp"
-    android:layout_height="wrap_content"
-    android:text="周六"
-    android:textSize="16sp"
-    android:maxLines="1"
-    android:ellipsize="end" />
+        android:layout_height="wrap_content"
+        android:text="2025-6-28"
+        android:textSize="16sp"
+        android:maxLines="1"
+        android:ellipsize="end" />
 
     <!-- 天气状况（日期右侧，动态宽度） -->
     <TextView
@@ -28,41 +28,39 @@
         android:layout_toLeftOf="@id/item_center_tv_wind" />  <!-- 限制右侧边界 -->
 
     <!-- 风向（居中，动态调整位置） -->
+
+    <!-- 温度（右侧固定宽度） -->
+
     <TextView
         android:id="@+id/item_center_tv_wind"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="东南风3级"
-        android:textSize="16sp"
-        android:maxLines="1"
+        android:layout_alignBottom="@+id/view"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="99dp"
+        android:layout_marginBottom="2dp"
         android:ellipsize="end"
-        android:layout_centerHorizontal="true" />
+        android:maxLines="1"
+        android:text="东南风3级"
+        android:textSize="16sp" />
 
-    <!-- 温度（右侧固定宽度） -->
     <TextView
         android:id="@+id/item_center_tv_temp"
         android:layout_width="80dp"
-    android:layout_height="wrap_content"
-    android:textSize="16sp"
-    android:text="9~-1℃"
-    android:maxLines="1"
-    android:ellipsize="end"
-    android:layout_alignParentRight="true" />
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:text="9~-1℃"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:layout_alignParentRight="true" />
 
-    <!-- 天气图标（温度左侧） -->
-    <ImageView
-        android:id="@+id/item_center_iv"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_toLeftOf="@id/item_center_tv_temp"
-        android:layout_marginRight="10dp"
-        android:layout_centerVertical="true" />
 
     <!-- 分隔线 -->
     <View
+        android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#E0E0E0"
         android:layout_below="@id/item_center_tv_date"
-        android:layout_marginTop="5dp" />
+        android:layout_marginTop="5dp"
+        android:background="#E0E0E0" />
 </RelativeLayout>

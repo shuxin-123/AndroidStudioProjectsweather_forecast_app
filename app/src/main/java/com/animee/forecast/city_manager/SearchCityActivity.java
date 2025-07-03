@@ -22,7 +22,7 @@ public class SearchCityActivity extends BaseActivity implements View.OnClickList
     EditText searchEt;
     ImageView submitIv;
     GridView searchGv;
-    String[]hotCitys = {"北京","上海","广州","深圳","珠海","佛山","南京","苏州","厦门","长沙","成都","福州",
+    String[]hotCitys = {"北京","上海","绵阳","广州","深圳","珠海","佛山","南京","苏州","厦门","长沙","成都","福州",
             "杭州","武汉","青岛","西安","太原","沈阳","重庆","天津","南宁"};
     private ArrayAdapter<String> adapter;
 
@@ -57,14 +57,13 @@ public class SearchCityActivity extends BaseActivity implements View.OnClickList
         int clickedId = v.getId();
 
         if (clickedId == R.id.search_iv_submit) {
-            city = searchEt.getText().toString().trim();  // Added trim() to remove whitespace
+            city = searchEt.getText().toString().trim();
 
             if (TextUtils.isEmpty(city)) {
                 Toast.makeText(this, "输入内容不能为空！", Toast.LENGTH_SHORT).show();
-                return;  // Early return for better flow
+                return;
             }
 
-            // Proceed with search
             String url = URLUtils.getTemp_url(city);
             loadData(url);
         }
@@ -72,8 +71,8 @@ public class SearchCityActivity extends BaseActivity implements View.OnClickList
 
     @Override
     public void onSuccess(String result) {
-        JHTempBean weatherBean = new Gson().fromJson(result, JHTempBean.class);
-        if (weatherBean.getError_code()==0) {
+        JHTempBean jhTempBean= new Gson().fromJson(result, JHTempBean.class);
+        if (jhTempBean.getError_code()==0) {
             Intent intent = new Intent(this, MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.putExtra("city",city);

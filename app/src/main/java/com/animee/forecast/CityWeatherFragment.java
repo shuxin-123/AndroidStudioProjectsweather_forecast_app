@@ -136,7 +136,6 @@ public class CityWeatherFragment extends BaseFragment implements View.OnClickLis
             TextView iconTv = itemView.findViewById(R.id.item_center_tv_con);
             TextView windTv = itemView.findViewById(R.id.item_center_tv_wind);
             TextView itemprangeTv = itemView.findViewById(R.id.item_center_tv_temp);
-            ImageView iIv = itemView.findViewById(R.id.item_center_iv);
 //          获取对应的位置的天气情况
             JHTempBean.ResultBean.FutureBean dataBean = futureList.get(i);
             idateTv.setText(dataBean.getDate());
@@ -161,7 +160,6 @@ public class CityWeatherFragment extends BaseFragment implements View.OnClickLis
         sportIndexTv = view.findViewById(R.id.frag_index_tv_sport);
         raysIndexTv = view.findViewById(R.id.frag_index_tv_rays);
         airIndexTv = view.findViewById(R.id.frag_index_tv_air);
-        dayIv = view.findViewById(R.id.frag_iv_today);
         futureLayout = view.findViewById(R.id.frag_center_layout);
         outLayout = view.findViewById(R.id.out_layout);
 //        设置点击事件的监听

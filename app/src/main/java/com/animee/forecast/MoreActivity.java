@@ -76,7 +76,7 @@ public class MoreActivity extends AppCompatActivity implements View.OnClickListe
         } else if (id == R.id.more_tv_cache) {
             clearCache();
         } else if (id == R.id.more_tv_share) {
-            shareSoftwareMsg("mini天气系统app是一款实用的天气预报软件，画面简约，播报天气情况非常精准，快来下载吧！");
+            shareSoftwareMsg("简约天气系统app是一款实用的天气预报软件，画面简约但麻雀虽小五脏俱全，播报天气情况非常精准，快来下载吧！");
         } else if (id == R.id.more_tv_exchangebg) {
             if (exbgRg.getVisibility() == View.VISIBLE) {
                 exbgRg.setVisibility(View.GONE);
@@ -91,7 +91,7 @@ public class MoreActivity extends AppCompatActivity implements View.OnClickListe
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("text/plain");
         intent.putExtra(Intent.EXTRA_TEXT,s);
-        startActivity(Intent.createChooser(intent,"说天气"));
+        startActivity(Intent.createChooser(intent,"简约天气"));
     }
 
     private void clearCache() {

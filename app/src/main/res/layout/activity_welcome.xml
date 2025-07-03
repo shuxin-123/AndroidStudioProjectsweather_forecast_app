@@ -10,23 +10,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="fitXY"
-        android:src="@drawable/abc_vector_test"/>
-
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/welcomimg_bg" />
+        android:src="@drawable/welcomimg2"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="65dp"
         android:layout_above="@+id/welcome_icon"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="467dp"
+        android:layout_marginTop="460dp"
         android:layout_marginBottom="58dp"
         android:gravity="center"
-        android:text="迷你天气预报"
+        android:text="简约天气预报"
         android:textColor="@android:color/white"
         android:textSize="35sp" />
 

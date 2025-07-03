@@ -32,7 +32,7 @@
                 android:layout_below="@id/frag_tv_city"/>
             <TextView
                 android:id="@+id/frag_tv_date"
-                android:text="2019-11-05"
+                android:text="2025-6-30"
                 android:layout_below="@id/frag_tv_condition"
                 android:layout_marginTop="20dp"
                 style="@style/todaytext" />
@@ -58,12 +58,6 @@
                 android:text="9~-1℃"
                 android:layout_toRightOf="@id/frag_tv_line1"
                 android:layout_alignBottom="@id/frag_tv_wind"/>
-            <ImageView
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:id="@+id/frag_iv_today"
-                android:scaleType="centerCrop"
-                android:layout_alignParentRight="true"/>
         </RelativeLayout>
         <!-- 用于显示未来三天的天气情况-->
         <LinearLayout
@@ -73,8 +67,8 @@
             android:orientation="vertical"
             android:padding="10dp"
             android:layout_margin="10dp"
-            android:background="@drawable/frag_bg"
-            ></LinearLayout>
+            android:background="@drawable/frag_bg">
+        </LinearLayout>
         <!-- 用于表示指数信息的线性布局-->
         <LinearLayout
             android:id="@+id/frag_index_layout"
