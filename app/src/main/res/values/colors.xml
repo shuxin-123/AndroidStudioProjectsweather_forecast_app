@@ -1,6 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <!-- 主色调：温暖的橙色，象征爱心、活力和行动力 -->
+    <color name="primary_color">#FF5722</color> <!-- 橙色（主按钮、重点文字） -->
+    <color name="primary_dark">#E64A19</color> <!-- 深橙色（按下状态、强调边框） -->
+    <color name="primary_light">#FFCCBC</color> <!-- 浅橙色（背景点缀、提示区域） -->
+
+    <!-- 辅助色：绿色，象征希望、成长和公益属性 -->
+    <color name="secondary_color">#2E7D32</color> <!-- 绿色（成功状态、进度条） -->
+    <color name="secondary_light">#C8E6C9</color> <!-- 浅绿色（辅助背景） -->
+
+    <!-- 中性色：确保内容清晰可读 -->
+    <color name="gray">#9E9E9E</color> <!-- 中灰色 -->
+    <color name="light_gray">#F5F5F5</color> <!-- 浅灰色（页面背景） -->
+    <color name="medium_gray">#E0E0E0</color> <!-- 中灰色（分割线、未选中状态） -->
+    <color name="dark_gray">#757575</color> <!-- 深灰色（次要文字、提示信息） -->
+
+    <!-- 基础色：通用文本和背景 -->
+    <color name="white">#FFFFFF</color> <!-- 白色（卡片背景、输入框） -->
+    <color name="black">#212121</color> <!-- 黑色（主要文字、标题） -->
+
+    <color name="blue">#2196F3</color>
+
+    <!-- 功能色：状态提示 -->
+    <color name="success">#4CAF50</color> <!-- 成功（捐赠完成提示） -->
+    <color name="warning">#FFC107</color> <!-- 警告（输入错误提示） -->
+    <color name="error">#F44336</color> <!-- 错误（网络失败提示） -->
 </resources>
