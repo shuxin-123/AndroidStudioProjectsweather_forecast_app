@@ -20,7 +20,7 @@
         android:layout_marginTop="460dp"
         android:layout_marginBottom="58dp"
         android:gravity="center"
-        android:text="简约天气预报"
+        android:text="智慧城市"
         android:textColor="@android:color/white"
         android:textSize="35sp" />
 

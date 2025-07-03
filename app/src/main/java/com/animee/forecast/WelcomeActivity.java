@@ -14,6 +14,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 
+import com.animee.forecast.zhihuicity.LoginActivity;
 
 import java.util.Random;
 
@@ -39,7 +40,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
+                startActivity(new Intent(WelcomeActivity.this, LoginActivity.class));
                 WelcomeActivity.this.finish();
             }
             @Override

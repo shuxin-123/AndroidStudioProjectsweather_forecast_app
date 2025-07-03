@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RadioButton xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    style="@style/CustomRadioButton"
+    android:drawableTop="@drawable/kc"
+    android:drawablePadding="8dp"
+    android:text="功能1"
+    android:gravity="center"
+    android:padding="12dp"/>

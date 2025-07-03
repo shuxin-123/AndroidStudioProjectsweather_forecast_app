@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".zhihuicity.CityMainActivity">
+
+    <!-- Fragment容器 -->
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/radioGroup" />
+
+    <!-- 底部导航栏 -->
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:background="@android:color/white"
+        android:elevation="8dp">
+
+        <RadioButton
+            android:id="@+id/rb_home"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            style="@style/CustomRadioButton"
+            android:drawableTop="@drawable/nav_home_selector"
+            android:text="首页"
+            android:textSize="18dp"
+            android:gravity="center"/>
+
+        <RadioButton
+            android:id="@+id/rb_shuju"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            style="@style/CustomRadioButton"
+            android:drawableTop="@drawable/nav_shuju_selector"
+            android:text="数据分析"
+            android:textSize="18dp"
+            android:gravity="center"/>
+
+        <RadioButton
+            android:id="@+id/rb_aixin"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            style="@style/CustomRadioButton"
+            android:drawableTop="@drawable/nav_aixin_selector"
+            android:text="爱心捐赠"
+            android:textSize="18dp"
+            android:gravity="center"/>
+        <RadioButton
+            android:id="@+id/rb_bus"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            style="@style/CustomRadioButton"
+            android:drawableTop="@drawable/nav_bus_selector"
+            android:text="智慧巴士"
+            android:textSize="18dp"
+            android:gravity="center"/>
+        <RadioButton
+            android:id="@+id/rb_dang"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            style="@style/CustomRadioButton"
+            android:drawableTop="@drawable/nav_dang_selector"
+            android:text="智慧党"
+            android:textSize="18dp"
+            android:gravity="center"/>
+    </RadioGroup>
+</RelativeLayout>
